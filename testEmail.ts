@@ -1,12 +1,14 @@
 require('dotenv').config();
-const nodemailer = require('nodemailer');
+// const nodemailer = require('nodemailer');
+
+import nodemailer from 'nodemailer';
 
 (async function () {
 	let transporter = nodemailer.createTransport({
 		host: 'localhost',
 		port: process.env.PORT || 25,
 		secure: false,
-	});
+	} as unknown as nodemailer.Transporter);
 
 	let info = await transporter.sendMail({
 		from: 'test@test.com', // sender address
