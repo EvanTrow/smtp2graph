@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import socketIOClient from 'socket.io-client';
 import { EmailContextProvider } from './lib/useEmail';
 
-const socket = socketIOClient(window.location.hostname + ':8080'); // initialize socket
+const socket = socketIOClient('/'); // initialize socket
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

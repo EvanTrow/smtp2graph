@@ -2,6 +2,8 @@
 
 Docker image for relaying mail from SMTP to the Microsoft Graph API. Uses node smtp-server and MS Graph sendMail.
 
+-   _Attachment support coming soon_
+
 ## Deploy
 
 ```bash
@@ -18,6 +20,8 @@ docker run -d \
     evantrow/smtp2graph:latest
 ```
 
+<br/>
+
 ## Environment Variables
 
 | Variable                 | What it do?                                     |
@@ -28,3 +32,13 @@ docker run -d \
 | DEV_MODE                 | Disables email relaying                         |
 | WEB_SERVER               | Enables web server for capturing emails         |
 | WEB_SERVER_MESSAGE_LIMIT | Limits the ammount of emails to store in memory |
+
+<br/>
+
+## Azure Application Setup
+
+The Azure Application must have the following API permissions:
+
+| API / Permissions name            | Type        | Admin consent required |
+| --------------------------------- | ----------- | ---------------------- |
+| Microsoft Graph: <b>Mail.Send</b> | Application | Yes                    |
