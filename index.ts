@@ -56,21 +56,11 @@ const config = {
 	...env,
 };
 
-if (!config.CLIENT_ID || !config.CLIENT_SECRET || !config.TENANT_ID) {
-	console.error('Invalid Config', {
-		CLIENT_ID: config.CLIENT_ID,
-		CLIENT_SECRET: config.CLIENT_SECRET,
-		TENANT_ID: config.TENANT_ID,
-	});
-	process.exit();
-}
-
 let sentMessages: Email[] = [];
 const smtpServer = new smtp.SMTPServer({
 	hideSTARTTLS: true,
 
 	onData(stream, session, callback) {
-		// callback();
 		parser(stream, {}, async (err, msgTemp: unknown) => {
 			if (err) {
 				console.log('Error:', err);
@@ -91,6 +81,14 @@ const smtpServer = new smtp.SMTPServer({
 
 			console.log('New Message:', email);
 
+			if (config.WEB_SERVER == true) {
+				sentMessages.push(email);
+				if (sentMessages.length > parseInt(config.WEB_SERVER_MESSAGE_LIMIT || 50)) sentMessages.shift();
+
+				// send new email to web clients
+				io.emit('newEmails', email);
+			}
+
 			if (!config.DEV_MODE) {
 				const token = await getToken();
 				const res = await sendEmail(token, email);
@@ -104,12 +102,6 @@ const smtpServer = new smtp.SMTPServer({
 				}
 			} else {
 				console.log('Email relay skipped:', 'DEV_MODE =', config.DEV_MODE);
-				sentMessages.push(email);
-				io.emit('newEmails', email);
-				// console.log(io.sockets);
-
-				if (sentMessages.length > parseInt(config.WEB_SERVER_MESSAGE_LIMIT || 50)) sentMessages.shift();
-
 				callback();
 			}
 		});
