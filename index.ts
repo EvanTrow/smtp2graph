@@ -6,6 +6,7 @@ import { stringToBoolean } from './lib/utils';
 
 import smtp from 'smtp-server';
 import { simpleParser as parser } from 'mailparser';
+import fs from 'fs';
 import path from 'path';
 import http from 'http';
 import express from 'express';
@@ -38,7 +39,7 @@ for (const property in process.env) {
 
 const config = {
 	// Listening Ports
-	PORT: 25,
+	PORT: 465,
 	HTTP_PORT: 8080,
 
 	// Microsoft Graph Creds
@@ -58,7 +59,12 @@ const config = {
 
 let sentMessages: Email[] = [];
 const smtpServer = new smtp.SMTPServer({
-	hideSTARTTLS: true,
+	secure: true,
+	authOptional: true,
+
+	key: fs.readFileSync('key.pem'),
+	cert: fs.readFileSync('cert.pem'),
+	logger: true,
 
 	onData(stream, session, callback) {
 		parser(stream, {}, async (err, msgTemp: unknown) => {
