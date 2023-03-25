@@ -8,7 +8,7 @@ Docker image for relaying mail from SMTP to the Microsoft Graph API. Uses node s
 
 ```bash
 docker run -d \
-    -p 25:25 \
+    -p 465:465 \
     -p 8080:8080 \
     -e CLIENT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx \
     -e CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \

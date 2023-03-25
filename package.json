@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "ts-node index.ts",
-		"dev": "nodemon index.ts",
+		"dev": "concurrently \"nodemon index.ts\" \"cd web-app && npm start\"",
 		"test": "ts-node testEmail.ts"
 	},
 	"author": "",
@@ -13,13 +13,16 @@
 	"dependencies": {
 		"@types/nodemailer": "^6.4.7",
 		"axios": "^1.2.2",
+		"concurrently": "^7.6.0",
 		"cors": "^2.8.5",
 		"dotenv": "^16.0.3",
 		"express": "^4.18.2",
+		"fs": "^0.0.1-security",
 		"http": "^0.0.1-security",
 		"mailparser": "^3.6.3",
 		"moment": "^2.29.4",
 		"nodemailer": "^6.8.0",
+		"nodemon": "^2.0.20",
 		"path": "^0.12.7",
 		"smtp-server": "^3.11.0",
 		"socket.io": "^4.5.4",
