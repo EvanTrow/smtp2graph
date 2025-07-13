@@ -14,8 +14,11 @@ export interface EmailRequest {
 	subject: string;
 	date: Date;
 	to: AddressValue;
+	cc?: AddressValue;
+	bcc?: AddressValue;
 	from: AddressValue;
 	messageID: string;
+	attachments?: Array<any>;
 }
 
 interface AddressValue {
@@ -34,7 +37,10 @@ export interface Email {
 	from: string;
 	fromName: string;
 	to: string[];
+	cc?: string[];
+	bcc?: string[];
 	subject: string;
 	body: string;
 	text: string;
+	attachments?: Array<any>;
 }

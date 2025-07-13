@@ -12,6 +12,12 @@ export const getToken = async () => {
 };
 
 export const sendEmail = async (token: string, email: Email) => {
+	let cte = 'Text';
+	let ct = email.text;
+	if (email.body != ''){
+		cte = 'HTML';
+		ct = email.body;
+	}
 	return axios
 		.post(
 			'https://graph.microsoft.com/v1.0/users/' + email.from + '/sendMail',
@@ -35,6 +41,28 @@ export const sendEmail = async (token: string, email: Email) => {
 							},
 						};
 					}),
+					ccRecipients: email.cc ? email.cc.map((address) => {
+						return {
+							emailAddress: {
+								address: address,
+							},
+						};
+					}) : undefined,
+					bccRecipients: email.bcc ? email.bcc.map((address) => {
+						return {
+							emailAddress: {
+								address: address,
+							},
+						};
+					}) : undefined,
+					attachments: email.attachments ? email.attachments.map((attachment) => {
+						return {
+							'@odata.type': '#microsoft.graph.fileAttachment',
+							name: attachment.filename,
+							contentType: attachment.contentType,
+							contentBytes: attachment.content.toString('base64'),
+						};
+					}) : undefined,
 				},
 				saveToSentItems: 'true',
 			},
