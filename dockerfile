@@ -5,9 +5,16 @@ WORKDIR /app
 
 # copy app files
 COPY package.json package.json
+COPY tsconfig.json tsconfig.json
 COPY index.ts index.ts
 COPY types.ts types.ts
 COPY lib lib
+
+COPY cert.pem cert.pem
+COPY key.pem key.pem
+
+# install typescript globally
+RUN npm install -g ts-node
 
 # install deps
 RUN npm install
