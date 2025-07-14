@@ -1,5 +1,5 @@
 # Pull base image.
-FROM node:18-alpine
+FROM node:22-alpine
 
 WORKDIR /app
 
@@ -16,7 +16,8 @@ RUN npm install
 COPY web-app/build build
 
 # Expose ports
-expose 25
-expose 8080
+EXPOSE 25
+EXPOSE 465
+EXPOSE 8080
 
 CMD [ "npm", "start" ]
