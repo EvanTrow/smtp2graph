@@ -80,9 +80,12 @@ const smtpServer = new smtp.SMTPServer({
 				from: msg.from?.value[0].address,
 				fromName: msg.from?.value[0].name,
 				to: msg.to.value.map((a) => a.address),
+				cc: msg.cc ? msg.cc.value.map((a) => a.address) : undefined,
+				bcc: msg.bcc ? msg.bcc.value.map((a) => a.address) : undefined,
 				subject: msg.subject,
 				body: msg.html || '',
 				text: msg.text || '',
+				attachments: msg.attachments,
 			};
 
 			console.log('New Message:', email);
